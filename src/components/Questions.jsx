@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import "./style.css";
 
 const Questions = () => {
-  const [tablica, setTablica] = useState([]);
-  const [odkryteFiszki, setOdkryteFiszki] = useState([]);
+  const [odkrytaFiszka, setOdkrytaFiszka] = useState(null);
 
   var pytania = [
     { id: 1, pytanie: "Jaka jest stolica Polski?", odpowiedz: "Warszawa" },
@@ -21,11 +20,11 @@ const Questions = () => {
   ];
 
   const flipFiszka = (id) => {
-    setOdkryteFiszki((prevOdkryteFiszki) => {
-      if (prevOdkryteFiszki.includes(id)) {
-        return prevOdkryteFiszki.filter((item) => item !== id);
+    setOdkrytaFiszka((prevOdkrytaFiszka) => {
+      if (prevOdkrytaFiszka === id) {
+        return null; 
       } else {
-        return [...prevOdkryteFiszki, id];
+        return id; 
       }
     });
   };
@@ -36,11 +35,11 @@ const Questions = () => {
         <div className="row">
           {pytania.map((item) => (
             <div
-              className={`item ${odkryteFiszki.includes(item.id) ? "odkryte" : ""}`}
+              className={`item ${odkrytaFiszka === item.id ? "odkryte" : ""} ${odkrytaFiszka === item.id ? "answer" : "question"}`}
               key={item.id}
               onClick={() => flipFiszka(item.id)}
             >
-              {odkryteFiszki.includes(item.id) ? item.odpowiedz : item.pytanie}
+              {odkrytaFiszka === item.id ? item.odpowiedz : item.pytanie}
             </div>
           ))}
         </div>
